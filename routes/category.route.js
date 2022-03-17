@@ -35,11 +35,11 @@ router.post('/update/:id',upload.single("image"),(request,response)=>{
             image:"http://localhost:3000/images/"+request.file.filename
         }
     }).then(result=>{
-        // if(modifiedCount){
-        //     return response.status(200).json({msg:"Successfully updated"});   
-        // }else{
+         if(result.modifiedCount){
+             return response.status(200).json({msg:"Successfully updated"});   
+         }else{
             return response.status(200).json({msg:"failed to update"});
-       // }
+         }
        
     }).catch(err=>{
         console.log(err);
