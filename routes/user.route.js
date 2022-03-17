@@ -26,7 +26,7 @@ router.post('/signup',(request, response) => {
      transporter.sendMail(mailOptions, function (error, info) {
        if (error) {
          console.log(error);
-         return response.status(500).json({msg:"Error logged"});
+         return response.status(500).json({msg:"Email not send"});
        } else {
         console.log('Email sent: ' + info.response);
         return response.status(200).json(result);
