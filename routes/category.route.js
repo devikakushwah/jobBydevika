@@ -35,16 +35,23 @@ router.post('/update/:id',upload.single("image"),(request,response)=>{
             image:"http://localhost:3000/images/"+request.file.filename
         }
     }).then(result=>{
-        if(modifiedCount){
-            return response.status(200).json({msg:"Successfully updated"});   
-        }else{
+        // if(modifiedCount){
+        //     return response.status(200).json({msg:"Successfully updated"});   
+        // }else{
             return response.status(200).json({msg:"failed to update"});
-        }
+       // }
        
     }).catch(err=>{
         console.log(err);
         return response.status(500).json({msg:"error generate"});
     });
 });
+router.post('/delete/:id',(request,response)=>{
+    Category.deleteOne({_id:request.params.id}).then(result=>{
+        return response.status(200).json(result);
+    }).catch(err=>{
+        return response.status(500).json({msg:"error found.."});
+    })
+})
 
 module.exports = router;
