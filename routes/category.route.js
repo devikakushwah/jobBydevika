@@ -26,4 +26,20 @@ router.post('/add-category',upload.single("image"),(request,response)=>{
     })
 });
 
+
+router.post('/update/:id',upload.single("image"),(request,response)=>{
+    
+    Category.findOneAndupdateOne({_id:request.params.id},{
+        $set:{
+            name:request.body.name,
+            image:"http://localhost:3000/images/"+request.file.filename
+        }
+    }).then(result=>{
+       return response.status(200).json(result);
+    }).catch(err=>{
+        console.log(err);
+        return response.status(500).json({msg:"error generate"});
+    });
+});
+
 module.exports = router;
