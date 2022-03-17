@@ -9,10 +9,10 @@ router.post('/signup',(request,response)=>{
       password: request.body.password
   }).then(result=>{
       console.log(result);
-      return response.status(200).render(result);
+      return response.status(200).json(result);
   }).catch(err=>{
       console.log(err);
-      return response.status(500).render({msg:"something happened.."})
+      return response.status(500).json({msg:"something happened.."})
   });
 });
 
