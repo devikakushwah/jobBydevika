@@ -29,7 +29,7 @@ router.post('/add-category',upload.single("image"),(request,response)=>{
 
 router.post('/update/:id',upload.single("image"),(request,response)=>{
     
-    Category.findOneAndupdateOne({_id:request.params.id},{
+    Category.updateOne({_id:request.params.id},{
         $set:{
             name:request.body.name,
             image:"http://localhost:3000/images/"+request.file.filename
