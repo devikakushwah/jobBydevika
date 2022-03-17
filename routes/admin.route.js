@@ -2,9 +2,9 @@ const express = require('express');
 const  Admin  = require('../model/admin.model');
 const router = express.Router();
 
-router.post('/signup',(request,response)=>{
+router.post('/login',(request,response)=>{
     console.log(request.body);
-  Admin.create({
+  Admin.findOne({
       email: request.body.email,
       password: request.body.password
   }).then(result=>{
