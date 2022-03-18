@@ -175,6 +175,15 @@ router.put('/add-education',[auth,[check('school',"school is required").notEmpty
      if(!error.isEmpty()){
        return response.status(402).json({msg:'error empty'});
      }
+     const{ 
+      school,
+      degree,
+      fieldOfStudy,
+      from,
+      to,
+      description
+
+     } = request.body;
      const edu = {
        school,
        degree,
