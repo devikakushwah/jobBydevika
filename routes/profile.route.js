@@ -122,4 +122,32 @@ router.delete('/delete/:id',auth,async(request,response)=>{
     return response.status(500).json({err:err.array})
   }
 });
+
+//put means update request update profile experience
+router.put('/experience',[auth,[check('title','title is required').not().isEmpty(),
+check('company','company is required').not().isEmpty(),
+check('from','from date is required').not().isEmpty()
+]],async (request,response)=>{
+   const error = validationResult(request);
+   if(!error.isEmpty()){
+     return response.status(402).json({error:error.array});
+   }
+   const { title,company,location,description,
+  from,to,current} = request.body;
+
+  const newExp = {
+    title,
+    company,
+    location,
+    from,current,description
+  }
+  try{
+  const profile = await findOne({user:request.user.id});
+  profile.experience.unshift(newExp);
+  await profile.save();
+  return response.status(202).json(profile);
+  }catch(err){
+
+  }
+})
 module.exports = router;
