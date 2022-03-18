@@ -64,7 +64,7 @@ router.post('/add-profile',[auth,[check('status','status is required').not().isE
   if(youtube){
     profile.social.you
   }
-  return response.status(200).json({msg:"send"});
+  return response.status(200).json(profile.skills);
 });
 
 module.exports = router;
