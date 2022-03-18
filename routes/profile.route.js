@@ -85,7 +85,7 @@ router.post('/add-profile',[auth,[check('status','status is required').not().isE
       await pro.save();
       return response.status(200).json(pro);
    }catch(error){
-    return response.status(500).json({msg:'server error'});
+    return response.status(500).json({error:error.array});
   }
   return response.status(200).json(profile.social);
 });
