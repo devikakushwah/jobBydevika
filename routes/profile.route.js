@@ -87,7 +87,6 @@ router.post('/add-profile',[auth,[check('status','status is required').not().isE
    }catch(error){
     return response.status(500).json({error:error.array});
   }
-  return response.status(200).json(profile.social);
 });
 
 module.exports = router;
