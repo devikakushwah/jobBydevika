@@ -85,7 +85,7 @@ router.post('/add-profile',[auth,[check('status','status is required').not().isE
       await objectProfile.save();
       return response.status(200).json(objectProfile);
    }catch(error){
-    return response.status(500).json({error:error.array()});
+    return response.status(500).json({error:error.array});
   }
 });
 
