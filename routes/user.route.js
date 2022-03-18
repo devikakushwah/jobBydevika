@@ -30,11 +30,7 @@ async (request,response)=>{
      user = new User({name,email,avatar,password});
        const salt = await bcrypt.genSalt(10);
        user.password=  await bcrypt.hash(password,salt);
-      await user.save().then(result=>{
-  return response.status(200).json(result);
-      }).catch(err=>{
-        return response.status(500).json({msg:"errorr found"});
-      })
+      await user.save();
      const payload = {user:{ id:user._id}}
 
     jwt.sign(
@@ -43,7 +39,7 @@ async (request,response)=>{
       { expiresIn: '5 days' },
       (err, token) => {
         if (err) throw err;
-        response.status(500).json({ token });
+        response.status(500).json(token);
       }
     );
 
