@@ -39,7 +39,7 @@ async (request,response)=>{
       { expiresIn: '5 days' },
       (err, token) => {
         if (err) throw err;
-        response.status(500).json(token);
+        response.status(500).json({token});
       }
     );
 
