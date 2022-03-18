@@ -106,10 +106,10 @@ router.get('/view-user/:id',async(request,response)=>{
      }
     return response.status(200).json(profile);
    }catch(err){
-     if(err.kind == 'objectId'){
+     if(err.kind == 'ObjectId'){
       return response.status(200).json({msg:"profile no found"});
      }
-    return response.status(500).json({err:err.array});
+    return response.status(500).json({msg:"server error"});
    }
 });
 module.exports = router;
