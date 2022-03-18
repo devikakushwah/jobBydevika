@@ -10,19 +10,19 @@ const { check, validationResult } = require('express-validator');
  
 // });
 
-router.get('/me', auth, async (req, res) => {
-    try {
-      const profile = await Profile.findOne({
-        user: req.user.id
-      }).populate('user', ['name', 'avatar']);
+// router.get('/me', auth, async (req, res) => {
+//     try {
+//       const profile = await Profile.findOne({
+//         user: req.user.id
+//       }).populate('user', ['name', 'avatar']);
   
-      if (!profile) {
-        return res.status(400).json({ msg: 'There is no profile for this user' });
-      }
+//       if (!profile) {
+//         return res.status(400).json({ msg: 'There is no profile for this user' });
+//       }
   
-      return res.status(200).json(profile);
-    } catch (err) {
-      res.status(500).json({err:err.array});
-    }
-  });
+//       return res.status(200).json(profile);
+//     } catch (err) {
+//       res.status(500).json({err:err.array});
+//     }
+//   });
 module.exports =router;
