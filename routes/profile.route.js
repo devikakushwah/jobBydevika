@@ -75,7 +75,7 @@ router.post('/add-profile',[auth,[check('status','status is required').not().isE
     profile.social.instagram = instagram;
   }
   try{
-      let objectProfile = await new Profile.findOne({user:request.user.id});
+      let objectProfile = await  Profile.findOne({user:request.user.id});
       if(objectProfile)
       {
         objectProfile = await findOneAndUpdate({user:request.user.id},{$set:profile},{new:true});
