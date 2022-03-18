@@ -100,7 +100,10 @@ router.get('/view',async(request,response)=>{
 //particular user profile
 router.get('/view-user/:id',async(request,response)=>{
    try{
-    const profile = await Profile.findOne({user:request.params._id}).populate('user',['name','avatar']);
+    const profile = await Profile.findOne({user:request.params.id}).populate('user',['name','avatar']);
+     if(!profile){
+      return response.status(200).json({msg:"there is no profile"});
+     }
     return response.status(200).json(profile);
    }catch(err){
     return response.status(500).json({err:err.array});
