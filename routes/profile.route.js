@@ -88,5 +88,13 @@ router.post('/add-profile',[auth,[check('status','status is required').not().isE
     return response.status(500).json({error:error.array});
   }
 });
-
+//get all profiles
+router.get('/view',async(request,response)=>{
+    try{
+         const profiles = await Profile.find().populate('user',['name','avatar']);
+         return response.status(200).json(profiles);
+    }catch(err){
+      return response.status(500).json({err:err.array})
+    }
+})
 module.exports = router;
