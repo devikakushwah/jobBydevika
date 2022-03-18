@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const adminRouter = require('./routes/admin.route');
 const categoryRouter = require('./routes/category.route');
 const profileRouter = require('./routes/profile.route');
-const userRouter = require('./routes/user');
+const userRouter = require('./routes/user.route');
 const app = express();
 mongoose.connect("mongodb+srv://devikakushwah:Radhakrishna%4029@newcluster.7o13k.mongodb.net/jobBydevika");
 

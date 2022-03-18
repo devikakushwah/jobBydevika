@@ -1,7 +1,7 @@
 const express = require('express');
 const User = require('../model/user.model');
-const gravatar = require('gravatar');
-const bcrypt = require('bcryptjs');
+//const gravatar = require('gravatar');
+//const bcrypt = require('bcryptjs');
 const {check,validationResult}= require('express-validator');
 const router = express.Router();
 
@@ -19,14 +19,15 @@ async (request,response)=>{
         return response.status(400).json({msg:"already exists"})
       }
       
-     const avatar = normalize(gravatar.url(email,{
-       s:'200',
-       r:'pg',
-       d:'mm'
-     }),{ forceHttps: true});
-      user = new User({name,email,avatar,password});
-      const salt = await bcrypt.genSalt(10);
-      user.password=  await bcrypt.hash(password,salt);
+    //  const avatar = normalize(gravatar.url(email,{
+    //    s:'200',
+    //    r:'pg',
+    //    d:'mm'
+    //  }),{ forceHttps: true});
+     const avatar = "string"
+     user = new User({name,email,avatar,password});
+      // const salt = await bcrypt.genSalt(10);
+      // user.password=  await bcrypt.hash(password,salt);
       await user.save().then(result=>{
   return response.status(200).json(result);
       }).catch(err=>{
