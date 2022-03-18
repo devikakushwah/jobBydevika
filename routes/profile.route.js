@@ -20,10 +20,9 @@ router.get('/me', auth, async (req, res) => {
         return res.status(400).json({ msg: 'There is no profile for this user' });
       }
   
-      res.json(profile);
+      return res.status(200).json(profile);
     } catch (err) {
-      console.error(err.message);
-      res.status(500).send('Server Error');
+      res.status(500).json({err:err.array});
     }
   });
 module.exports =router;
