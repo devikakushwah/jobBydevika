@@ -11,7 +11,7 @@ check('password','please enter a password with 6 or more characters').isLength({
 async (request,response)=>{
    const error = validationResult(request,response);
    if(!error.isEmpty())
-     return response.status(400).json({error:error.array() })
+     return response.status(400).json({msg :"isEmpty"})
      const { name,email,password} = request.body;
      try{
       let user = await User.findOne({email});
@@ -47,7 +47,7 @@ async (request,response)=>{
 
 
      }catch(error){
-       return response.status(500).json({error:error.array()})
+       return response.status(500).json({msg:"error caych"})
      }
 });
 
