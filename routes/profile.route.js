@@ -96,5 +96,14 @@ router.get('/view',async(request,response)=>{
     }catch(err){
       return response.status(500).json({err:err.array})
     }
-})
+});
+//particular user profile
+router.get('/view-user/:id',async(request,response)=>{
+   try{
+    const profile = await Profile.findOne({user:request.params._id}).populate('user',['name','avatar']);
+    return response.status(200).json(profile);
+   }catch(err){
+    return response.status(500).json({err:err.array});
+   }
+});
 module.exports = router;
