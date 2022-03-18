@@ -19,11 +19,11 @@ async (request,response)=>{
         return response.status(400).json({msg:"already exists"})
       }
       
-     const avatar = normalize(gravatar.url(email,{
+     const avatar = gravatar.url(email,{
         s:'200',
         r:'pg',
          d:'mm'
-       }),{ forceHttps: true});
+       });
     // const avatar = "string"
      user = new User({name,email,avatar,password});
        const salt = await bcrypt.genSalt(10);
