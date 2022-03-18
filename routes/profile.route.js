@@ -196,7 +196,7 @@ router.put('/add-education',[auth,[check('school',"school is required").notEmpty
        const profile = await Profile.findOne({user:request.user.id});
        profile.education.unshift(edu);
        await profile.save();
-       return response.status(500).json({msg:'education add'});
+       return response.status(500).json(profile);
      }
      catch(err){
       return response.status(500).json({msg:'Server error'});
