@@ -4,18 +4,10 @@ const auth = require('../middleware/auth');
 const User = require('../model/user');
 const router = express.Router();
 
-router.get('/me',auth,async(request,response,next) => {
- try{
-    const profile = await Profile.findOne({user: request.user.id}).populate('user',['name','avatar']);
-    if(!profile){
-      return response.status(404).json({msg:'profile not found'});
-    }
-    return response.status(404).json({profile});
-    
- }catch(err){
-   return response.status(500).json({message: 'error'});
- }
-});
+router.get('/',(request,response)=>{
+  return response.status(200).json({msg:"bfdbfjd"});
+})
+
 
 // router.post('/add-profile',[auth,[check('status','status is required').not().isEmpty(),
 //   check('skills','skills is required').not().isEmpty()
