@@ -166,7 +166,7 @@ router.delete('/delete-experience/:exp_id',auth,async(request,response)=>{
     }
 });
 //education
-router.put('/add-education',[auth[check('school',"school is required").notEmpty(),
+router.put('/add-education',[auth,[check('school',"school is required").notEmpty(),
     check('degree','degree is required').notEmpty(),
     check('fieldOfStudy','fieldOfStudy is required').notEmpty(),
     check('from','from is required to know about the past').notEmpty()
@@ -188,10 +188,9 @@ router.put('/add-education',[auth[check('school',"school is required").notEmpty(
        profile.education.unshift(edu);
        await profile.save();
        return response.status(500).json({msg:'education add'});
-     }catch(err){
-      return response.status(500).json({msg:'Server error'});
-    
      }
-    
+     catch(err){
+      return response.status(500).json({msg:'Server error'});
+     }  
 });
 module.exports = router;
