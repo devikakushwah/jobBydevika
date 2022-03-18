@@ -19,15 +19,15 @@ async (request,response)=>{
         return response.status(400).json({msg:"already exists"})
       }
       
-      const avatar = normalize(gravatar.url(email,{
-        s:'200',
-        r:'pg',
-        d:'mm'
-      }),{ forceHttps: true});
-    // const avatar = "string"
+      // const avatar = normalize(gravatar.url(email,{
+      //   s:'200',
+      //   r:'pg',
+      //   d:'mm'
+      // }),{ forceHttps: true});
+     const avatar = "string"
      user = new User({name,email,avatar,password});
-      // const salt = await bcrypt.genSalt(10);
-      // user.password=  await bcrypt.hash(password,salt);
+       const salt = await bcrypt.genSalt(10);
+       user.password=  await bcrypt.hash(password,salt);
       await user.save().then(result=>{
   return response.status(200).json(result);
       }).catch(err=>{
