@@ -3,6 +3,7 @@ const Profile = require('../model/profile.model');
 const auth = require('../middleware/auth');
 const User = require('../model/user.model');
 const {check,validationResult} = require('express-validator');
+const { findOneAndUpdate } = require('../model/profile.model');
 const router = express.Router();
 
 router.get('/me',auth,async(request,response,next) => {
@@ -62,9 +63,31 @@ router.post('/add-profile',[auth,[check('status','status is required').not().isE
   }
   profile.social={}
   if(youtube){
-    profile.social.you
+    profile.social.youtube = youtube;
   }
-  return response.status(200).json(profile.skills);
+  if(facebook){
+    profile.social.facebook = facebook;
+  }
+  if(twitter){
+    profile.social.twitter = twitter;
+  }
+  if(instagram){
+    profile.social.instagram = instagram;
+  }
+  try{
+      let pro = await new Profile.findOne({user:request.user.id});
+      if(pro)
+      {
+        pro = await findOneAndUpdate({user:request.user.id},{$set:profile},{new:true});
+        return response.status(200).json(pro);
+      } 
+      pro = new Profile(profile);
+      await pro.save();
+      return response.status(200).json(pro);
+   }catch(error){
+    return response.status(500).json({msg:'server error'});
+  }
+  return response.status(200).json(profile.social);
 });
 
 module.exports = router;
