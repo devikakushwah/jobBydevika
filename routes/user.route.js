@@ -1,6 +1,7 @@
 const express = require('express');
 const User = require('../model/user.model');
 const gravatar = require('gravatar');
+const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const {check,validationResult}= require('express-validator');
 const router = express.Router();
@@ -33,17 +34,17 @@ async (request,response)=>{
       }).catch(err=>{
         return response.status(500).json({msg:"errorr found"});
       })
-    //  const payload = {user:{ id:user.id}}
+     const payload = {user:{ id:user.id}}
 
-    // jwt.sign(
-    //   payload,
-    //   config.get('jwtSecret'),
-    //   { expiresIn: '5 days' },
-    //   (err, token) => {
-    //     if (err) throw err;
-    //     res.json({ token });
-    //   }
-    // );
+    jwt.sign(
+      payload,
+        config.get('jwtSecret'),
+      { expiresIn: '5 days' },
+      (err, token) => {
+        if (err) throw err;
+        response.status(500).json({ token });
+      }
+    );
 
 
 
