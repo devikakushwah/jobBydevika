@@ -78,7 +78,7 @@ router.post('/add-profile',[auth,[check('status','status is required').not().isE
       let objectProfile = await  Profile.findOne({user:request.user.id});
       if(objectProfile)
       {
-        objectProfile = await findOneAndUpdate({user:request.user.id},{$set:profile},{new:true});
+        objectProfile = await Profile.findOneAndUpdate({user:request.user.id},{$set:profile},{new:true});
         return response.status(200).json(objectProfile);
       } 
       objectProfile = new Profile(profile);
