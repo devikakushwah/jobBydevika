@@ -202,4 +202,17 @@ router.put('/add-education',[auth,[check('school',"school is required").notEmpty
       return response.status(500).json({msg:'Server error'});
      }  
 });
+
+router.delete('/delete-education/:edu_id',auth,async (request,response)=>{
+  try{
+   const profile = await Profile.findOne({user:request.user.id});
+   const removeIndex = profile.education.map(item=> item.id
+    ).indexOf(request.params.edu_id);
+    profile.education.splice(removeIndex, 1);
+    await profile.save();
+    return response.status(202).json(profile);
+  }catch(err){
+    return response.status(402).json({msg:"Server error"});
+  }
+});
 module.exports = router;
