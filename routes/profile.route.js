@@ -150,5 +150,19 @@ async (request,response)=>{
     return response.status(402).json({msg:"Server error"});
   
   }
-})
+});
+//delete a particular exp in particular profile
+router.delete('/delete-experience/:exp_id',auth,async(request,response)=>{
+    try{
+      const profile = await Profile.findOne({user:request.user.id});
+      const removeIndex = profile.experience.map(item=> item.id).indexOf(request.params.exp_id);
+      profile.experience.splice(removeIndex,1);
+      await profile.save();
+      return response.status(202).json(profile);
+  
+    }catch(err){
+      return response.status(402).json({msg:"Server error"});
+  
+    }
+});
 module.exports = router;
