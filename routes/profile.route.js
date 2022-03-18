@@ -165,4 +165,33 @@ router.delete('/delete-experience/:exp_id',auth,async(request,response)=>{
   
     }
 });
+//education
+router.put('/add-education',[auth[check('school',"school is required").notEmpty(),
+    check('degree','degree is required').notEmpty(),
+    check('fieldOfStudy','fieldOfStudy is required').notEmpty(),
+    check('from','from is required to know about the past').notEmpty()
+]],async (request,response)=>{
+     const error = validationResult(request);
+     if(!error.isEmpty()){
+       return response.status(402).json({msg:'error empty'});
+     }
+     const edu = {
+       school,
+       degree,
+       fieldOfStudy,
+       from,
+       to,
+       description
+     };
+     try{
+       const profile = await Profile.findOne({user:request.user.id});
+       profile.education.unshift(edu);
+       await profile.save();
+       return response.status(500).json({msg:'education add'});
+     }catch(err){
+      return response.status(500).json({msg:'Server error'});
+    
+     }
+    
+});
 module.exports = router;
