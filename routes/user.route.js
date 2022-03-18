@@ -1,46 +1,55 @@
 const express = require('express');
 const User = require('../model/user.model');
-var  nodemailer = require('nodemailer');
-var smtpTransport = require('nodemailer-smtp-transport');
+const gravatar = require('gravatar');
+const bcrypt = require('bcryptjs');
+const {check,validationResult}= require('express-validator');
 const router = express.Router();
 
-router.post('/signup',(request, response) => {
-    User.create({name:request.body.name, email:request.body.email
-    ,password:request.body.password}).then(result=>{
-      console.log(result);
+router.post('/signup',check('name','Name is required').notEmpty(),
+check('email','Please include a valid email address').isEmail(),
+check('password','please enter a password with 6 or more characters').isLength({min:6}), 
+async (request,response)=>{
+   const error = validationResult(request,response);
+   if(!error.isEmpty())
+     return response.status(400).json({error:error.array() })
+     const { name,email,password} = request.body;
+     try{
+      let user = await User.findOne({email});
+      if(user){
+        return response.status(400).json({msg:"already exists"})
+      }
       
-      var transporter = nodemailer.createTransport(smtpTransport({
-        service: 'gmail',
-        host: 'smtp.gmail.com',
-        auth: {
-            user: 'devikakushwah29@gmail.com',
-            pass: 'Database@29'
-         }
-      }));
-           
-     var mailOptions = {
-        from: 'devikakushwah29@gmail.com',
-        to: 'devikakushwah29@gmail.com',
-        subject: 'checking ',
-        text: 'devika sending email for project!'
-      };
+     const avatar = normalize(gravatar.url(email,{
+       s:'200',
+       r:'pg',
+       d:'mm'
+     }),{ forceHttps: true});
+      user = new User({name,email,avatar,password});
+      const salt = await bcrypt.genSalt(10);
+      user.password=  await bcrypt.hash(password,salt);
+      await user.save().then(result=>{
+  return response.status(200).json(result);
+      }).catch(err=>{
+        return response.status(500).json({error:error.array()});
+      })
+    //  const payload = {user:{ id:user.id}}
 
-     transporter.sendMail(mailOptions, function (error, info) {
-       if (error) {
-         console.log(error);
-         return response.status(500).json({msg:"Email not send"});
-       } else {
-        console.log('Email sent: ' + info.response);
-        return response.status(200).json(result);
-        
-       }
-     });
-  
-     
-    }).catch(err=>{
-        console.log(err);
-     return response.status(500).json({msg:"Error logged"});
-    });
+    // jwt.sign(
+    //   payload,
+    //   config.get('jwtSecret'),
+    //   { expiresIn: '5 days' },
+    //   (err, token) => {
+    //     if (err) throw err;
+    //     res.json({ token });
+    //   }
+    // );
+
+
+
+     }catch(error){
+       return response.status(500).json({error:error.array()})
+     }
 });
+
 
 module.exports = router;
