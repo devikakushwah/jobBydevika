@@ -112,4 +112,14 @@ router.get('/view-user/:id',async(request,response)=>{
     return response.status(500).json({msg:"server error"});
    }
 });
+//delete profiles
+router.delete('/delete/:id',auth,async(request,response)=>{
+  try{
+       await Profile.findOneAndRemove({user:request.params.id});
+       await User.findOneAndRemove({_id:request.user_id});
+       return response.status(200).json({msg:"user deleted"});
+  }catch(err){
+    return response.status(500).json({err:err.array})
+  }
+});
 module.exports = router;
