@@ -232,7 +232,7 @@ router.get('/github/:username',(request,response)=>{
       if(response.statusCode !== 200){
         return response().status(404).json({msg:"No github profile found"})
       }
-      request.json(JSON.parse(body));
+      response.json(JSON.parse(body));
     });
   }
   catch(err){
