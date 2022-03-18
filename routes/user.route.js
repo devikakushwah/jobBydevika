@@ -30,7 +30,7 @@ async (request,response)=>{
       await user.save().then(result=>{
   return response.status(200).json(result);
       }).catch(err=>{
-        return response.status(500).json({error:error.array()});
+        return response.status(500).json({msg:"errorr found"});
       })
     //  const payload = {user:{ id:user.id}}
 
