@@ -46,7 +46,7 @@ async (request,response)=>{
 
 
      }catch(error){
-       return response.status(500).json({msg:"error caych"})
+       return response.status(500).json({msg:"error catch"})
      }
 });
 
