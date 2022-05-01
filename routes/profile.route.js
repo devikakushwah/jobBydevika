@@ -139,7 +139,7 @@ async (request,response)=>{
 
   const newExp = {
     title,
-    company,
+    company,    
     location,
     from,current,to,description
   }
